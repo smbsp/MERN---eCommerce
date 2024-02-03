@@ -39,6 +39,8 @@ fs.readFile('f2.txt', 'utf-8', (err, data)=>{
     return;
    }
    console.log(data);
+
+   return data;
 });
 
 // HW - rename or deleting a file.

@@ -1,0 +1,50 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn
+
+PATH: 
+  /usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.18.0
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  SyntaxError: /Users/ashwanirajput/Documents/Projects/MERN_Stack_Jan_2024/Lec-3_Middlewares_Intro_to_mongodb/package.json: Unexpected token } in JSON at position 141
+      at JSON.parse (<anonymous>)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:1629:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "mern",
+    "version": "1.0.0",
+    "license": "MIT",
+    "scripts": {
+      "start": "node htmlStringServe.js",
+      "dev": "nodemon",
+    },
+    "nodemon": {
+      "watch": [
+        "src"
+      ]
+    },
+    "devDependencies": {
+      "nodemon": "^3.0.3"
+    },
+    "dependencies": {
+      "express": "^4.18.2"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
