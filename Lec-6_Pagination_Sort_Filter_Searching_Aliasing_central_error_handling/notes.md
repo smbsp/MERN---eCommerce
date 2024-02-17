@@ -81,4 +81,15 @@
     "message": "Internal Server Error"
    }
 
+# What is aliasing?
+   - In context of nodejs/expressjs API - refers to a technique that is used to simplify the    meaningful name to routes in the end points.
 
+   - It makes easier to understand the end points and shorten the URL as well.
+
+   - http://localhost:3040/api/products?filter={"categories": "electronics"}&page=1&limit=5 => 
+     create its aliasing - http://localhost:3040/api/products/bigBillionDay
+
+   - what /bigBillionDay end point want to contain
+
+      - Product whose stock(qty) is less than 10.
+      - rating of the product must be > 4.8
