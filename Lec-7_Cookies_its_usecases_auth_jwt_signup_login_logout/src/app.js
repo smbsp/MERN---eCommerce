@@ -31,7 +31,7 @@ app.get('/', (req, res)=>{
 
    res.cookie('prevpage', 'home', {
     maxAge: 7 * 24 * 60 * 60 * 1000, // for a week
-    httpOnly: true
+    // httpOnly: true
    });
 
     res.status(200).json({
