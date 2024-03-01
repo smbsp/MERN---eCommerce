@@ -102,7 +102,11 @@ const newProductSchemaRules = {
 // schema-> structure and validation 
 const productSchema = new mongoose.Schema(newProductSchemaRules);
 
-
+// Define indexes
+productSchema.index({ name: 1 }); // Index on 'name' field in ascending order
+productSchema.index({ brand: 1 }); // Index on 'brand' field in ascending order
+productSchema.index({ categories: 1 }); // Index on 'categories' field in ascending order
+productSchema.index({ price: 1 }); // Index on 'price' field in ascending order
 let validCategories = ['Electronics', "Audio", 'Clothing', 'Accessories', "Shoes", "Men's Fashion"];
 
 productSchema.pre("save", function (next) {

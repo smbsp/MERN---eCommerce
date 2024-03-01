@@ -20,7 +20,7 @@ function App() {
 
     console.log('Checkout.js script loaded');
 
-    const resp = await fetch('http://localhost:3060/checkout', {method: 'POST'});
+    const resp = await fetch('http://localhost:8080/checkout', {method: 'POST'});
     const respJSON = await resp.json();
     console.log(respJSON.message);
 
@@ -30,7 +30,7 @@ function App() {
 
         var options = {
           "key": 'rzp_test_4oG8GbYT3IEPnA', // Enter the Key ID generated from the razorpay Dashboard
-          "amount": amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+          "amount": amount.toString(), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
           "currency":currency,
           "name": "Acme Corp", //your business name
           "description": "Test Transaction",

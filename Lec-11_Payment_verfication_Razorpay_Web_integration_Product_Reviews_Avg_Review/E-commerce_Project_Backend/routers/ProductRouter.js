@@ -13,8 +13,8 @@ ProductRouter.post("/", checkInput,
     protectRouteMiddleWare, isAuthorizedMiddleWare(['admin', 'seller']),
     createProductHandler);
 ProductRouter.get("/", getAllProductHandler);
-ProductRouter.get("/:productId", getProductById);
-ProductRouter.delete("/:productId", isAuthorizedMiddleWare(['admin', 'seller']), deleteProductById);
+ProductRouter.get("/:elementId", getProductById);
+ProductRouter.delete("/:elementId", isAuthorizedMiddleWare(['admin', 'seller']), deleteProductById);
 module.exports = ProductRouter;
 
 async function getAllProductHandler(req, res) {

@@ -8,7 +8,7 @@ const createFactory = (ElementModel) => {
             res.status(200).json({
                 status: "successfull",
                 message: `added  the element `,
-                element: element
+                data: element
             })
         } catch (err) {
             res.status(500).json({
@@ -30,7 +30,7 @@ const getAllFactory = (ElementModel) => {
             }
             res.status(200).json({
                 status: "success",
-                message: elementDataStore
+                data: elementDataStore
             })
         } catch (err) {
             res.status(404).json({
@@ -45,7 +45,7 @@ const getAllFactory = (ElementModel) => {
 const getByIdFactory = (ElementModel) => {
     return async function (req, res) {
         try {
-            const elementId = req.params.elementId;
+            const { elementId } = req.params;
             const elementDetails = await ElementModel.findById(elementId);
 
             if (elementDetails == "no element found") {
@@ -53,7 +53,7 @@ const getByIdFactory = (ElementModel) => {
             } else {
                 res.status(200).json({
                     status: "successfull",
-                    message: elementDetails
+                    data: elementDetails
                 })
             }
         } catch (err) {
@@ -72,7 +72,7 @@ const deleteByIdFactory = (ElementModel) => {
             let element = await ElementModel.findByIdAndDelete(elementId);
             res.status(200).json({
                 status: "successfull element deleted",
-                message: element
+                data: element
             });
         } catch (err) {
             console.error(err);
