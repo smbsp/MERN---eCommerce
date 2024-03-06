@@ -11,6 +11,8 @@ const fs = require("fs");
 const path = require("path");
 const sendEmailHelper = require('../utils/dynamicMailSender');
 
+const { encryptPassword, decryptPassword } = require('../utils/passwordUtil');
+
 
 const pathToOtpHTML = path.join(__dirname, "../", "templates", "otp.html");
 const HtmlTemplateString = fs.readFileSync(pathToOtpHTML, "utf-8");
@@ -20,6 +22,14 @@ const signupController = async(req, res) => {
         // add it to the db 
         const userObject = req.body
         //   data -> req.body
+        // implement the security for pwd
+        // Encrypt your pwd and then persist into the db
+        // const encryptPwd = encryptPassword(userObject.password);
+        // const encryptConfirmPwd = encryptPassword(userObject.confirmPassword);
+
+        // console.log(encryptPwd, encryptConfirmPwd);
+
+        // let newUser = await UserModel.create({...userObject, password: encryptPwd, confirmPassword: encryptConfirmPwd});
         let newUser = await UserModel.create(userObject);
         // send a response 
         res.status(201).json({
@@ -43,7 +53,20 @@ const loginController = async(req, res) => {
          *      a. email and password 
          **/
 
+
+
         let { email, password } = req.body;
+
+        //TODO: Decryption via iv generated from encryption
+        // const encryptPwd = encryptPassword(password);
+        // const decryptedPwd = decryptPassword(encryptPwd);
+
+        // console.log(decryptedPwd);
+        // const encryptConfirmPwd = encryptPassword(userObject.confirmPassword);
+
+        // console.log(encryptPwd, encryptConfirmPwd);
+
+
         let user = await UserModel.findOne({ email });
         if (user) {
             let areEqual = password == user.password;

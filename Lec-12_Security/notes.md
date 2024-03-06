@@ -11,7 +11,7 @@
    3. Adding extra headers
 
    - SQL injection: manipulating the data while intercepting the ruest and then modify the data before sending it to DB.
-   4. no SQL Injection - sanitizing the input data before persisiting into db.
+   4. no SQL Injection - sanitizing the input data before persisting into db.
 
 
 1. Password Encryption:

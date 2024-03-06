@@ -17,12 +17,23 @@ mongoose.connect(dbURL)
 
 // with this your creating simple app -> api
 const app = express();
-const UserRouter = require("./routers/UserRouter");
-const ProductRouter = require("./routers/ProductRouter");
-const AuthRouter = require("./routers/AuthRouter");
-const BookingRouter = require("./routers/BookingRouter");
-const ReviewRouter = require("./routers/ReviewRouter");
+const UserRouter = require("./src/routers/UserRouter");
+const ProductRouter = require("./src/routers/ProductRouter");
+const AuthRouter = require("./src/routers/AuthRouter");
+const BookingRouter = require("./src/routers/BookingRouter");
+const ReviewRouter = require("./src/routers/ReviewRouter");
+
+
+app.use((req, res, next)=>{
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('x-api-secret-key', 'dsghfvsd123GH');
+    next();
+});
+
+
 app.use(cors());
+
+
 app.use(express.json());
 app.use(cookieParser());
 
