@@ -23,17 +23,18 @@ const signupController = async(req, res) => {
         const userObject = req.body
         //   data -> req.body
         // implement the security for pwd
-        // Encrypt your pwd and then persist into the db
-        // const encryptPwd = encryptPassword(userObject.password);
-        // const encryptConfirmPwd = encryptPassword(userObject.confirmPassword);
+        //Encrypt your pwd and then persist into the db
+        const encryptPwd = encryptPassword(userObject.password);
+        const encryptConfirmPwd = encryptPassword(userObject.confirmPassword);
 
-        // console.log(encryptPwd, encryptConfirmPwd);
+        console.log(encryptPwd, encryptConfirmPwd);
 
-        // let newUser = await UserModel.create({...userObject, password: encryptPwd, confirmPassword: encryptConfirmPwd});
-        let newUser = await UserModel.create(userObject);
+        let newUser = await UserModel.create({...userObject, password: encryptPwd, confirmPassword: encryptConfirmPwd});
+        // let newUser = await UserModel.create(userObject);
+
         // send a response 
         res.status(201).json({
-            "message": "user created successfully",
+            message: "user created successfully",
             user: newUser,
             status: "success"
         })
@@ -52,24 +53,17 @@ const loginController = async(req, res) => {
          * 1. enable login -> tell the client that user is logged In
          *      a. email and password 
          **/
-
-
-
         let { email, password } = req.body;
 
         //TODO: Decryption via iv generated from encryption
-        // const encryptPwd = encryptPassword(password);
-        // const decryptedPwd = decryptPassword(encryptPwd);
+        const encryptPwd = encryptPassword(password);
+        const decryptedPwd = decryptPassword(encryptPwd);
 
         // console.log(decryptedPwd);
-        // const encryptConfirmPwd = encryptPassword(userObject.confirmPassword);
-
-        // console.log(encryptPwd, encryptConfirmPwd);
-
 
         let user = await UserModel.findOne({ email });
         if (user) {
-            let areEqual = password == user.password;
+            let areEqual = decryptedPwd === decryptPassword(user.password);
             if (areEqual) {
                 // user is authenticated
                 /* 2. Sending the token -> people remember them
@@ -83,7 +77,6 @@ const loginController = async(req, res) => {
                     message: "user logged In"
                 })
             } else {
-                console.log("err", err)
                 res.status(404).json({
                     status: "failure",
                     message: "email or password is incorrect"
@@ -93,8 +86,7 @@ const loginController = async(req, res) => {
         } else {
             res.status(404).json({
                 status: "failure",
-                message:
-                    "user not found with creds"
+                message: "user not found with creds"
             })
         }
 

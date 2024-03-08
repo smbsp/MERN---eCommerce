@@ -16,6 +16,7 @@ const ProductListing = () => {
     : `https://fakestoreapi.com/products`;
 
     const {data: products, error, isLoading} = useFetchData(url, []);
+    console.log(products);
 
     const itemsPerPage = 3;
     const [currentPage, setCurrentPage] = useState(1);

@@ -17,6 +17,39 @@ function Login() {
     const { setAuth } = useAuth();
     const handleSubmit = async () => {
        // write your logic here
+
+          try{
+
+            setLoading(true);
+
+            let userDetails= {
+               email,
+               password,
+            };
+
+            console.log(userDetails);
+
+            const resp = await axios.post(urlConfig.LOGIN_URL, userDetails);
+            const data = resp.data;
+            // console.log(data);
+            console.log(setAuth);
+
+            if(data.status === "success") {
+                setEmail("");
+                setPassword("");
+                navigate('/');
+                console.log(data);
+                setAuth(data);
+            }
+        }catch(err){
+            console.log(err.message);
+            setErrMsg("User is not loggedin successfully!");
+            setTimeout(()=>{
+                setErrMsg("");
+            }, 2000);
+        } finally {
+            setLoading(false);
+        }
     }
     /**
      * email, password -> verified

@@ -18,8 +18,39 @@ function Signup() {
     const handleSubmit = async () => {
         // write your logic here
 
-        
+        try{
 
+            setLoading(true);
+
+            let userDetails= {
+               name,
+               email,
+               password,
+               confirmPassword 
+            };
+
+            console.log(userDetails);
+
+            const resp = await axios.post(urlConfig.SIGNUP_URL, userDetails);
+            const data = resp.data;
+            console.log(data);
+
+            if(data) {
+                setName("");
+                setEmail("");
+                setPassword("");
+                setConfirmPassword("");
+                navigate('/login')
+            }
+        }catch(err){
+            console.log(err.message);
+            setErrMsg("User is not resigtered successfully!");
+            setTimeout(()=>{
+                setErrMsg("");
+            }, 2000);
+        } finally {
+            setLoading(false);
+        }
     }
 
     if (loading) return <h1>Loading...</h1>

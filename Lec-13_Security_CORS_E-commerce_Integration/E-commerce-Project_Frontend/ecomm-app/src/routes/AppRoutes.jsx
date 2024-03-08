@@ -16,6 +16,7 @@ const AppRoutes = () => {
   console.log(categories.data);
 
   const { user } = useAuth();
+  console.log('APP routes user data->',user);
   return (
       <>
       
@@ -23,7 +24,10 @@ const AppRoutes = () => {
         <Router>
           
             {/* { user && user.length ? <Header categories={categories.data} isLoading={isLoading}/> : <></>}  */}
-            <Header categories={categories.data} isLoading={isLoading}/>
+            {
+              user && Object.keys(user).length ? <Header categories={categories.data} isLoading={isLoading}/> : <></>
+            }     
+            
             <Routes>
                 <Route path='/' element={<ProductListing />} />
                 <Route path='/cart' element={<CartItems />} />
