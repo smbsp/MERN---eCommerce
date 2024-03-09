@@ -13,6 +13,8 @@
 
 2. WS implementation:
 
+    About Websocket: https://socket.io/docs/v4/
+
     server side -> use socket.io (https://socket.io/docs/v4/tutorial/introduction)
 
        1. to install socket.io for server side ->  yarn add socket.io
