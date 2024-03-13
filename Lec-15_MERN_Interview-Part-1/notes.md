@@ -2,6 +2,7 @@
   
      1. NodeJS modules
          - inbuilt modules (fs, http, path, os);
+         - local modules (like passwordUtil where you exposts the function, objects and use require to import the local modules) 
          - third party modules (socket.io, send grid, brevo, nodemailer, crypto)
 
      2. nodejs streams
@@ -32,6 +33,7 @@ Some of the main features of Node.js include:
 3. NPM (Node Package Manager): Node.js comes with npm, a package manager for installing, sharing, and managing third-party libraries and modules.
 
 4. JavaScript runtime: Node.js allows developers to write server-side applications in JavaScript, enabling them to use the same language for both client-side and server-side development.
+
 5. Cross-platform: Node.js applications can run on various operating systems, including Windows, macOS, and Linux, providing flexibility and portability.
 
 7. High performance: Node.js is known for its high performance and low latency, making it suitable for building real-time web applications and APIs.
@@ -42,4 +44,15 @@ Some of the main features of Node.js include:
 
 Browser vs NodeJS 
 
+   Browser:
+      - Provides a runtime env for the client side JS, enables the interaction with the web pages(DOM manipulation), handling user event and rendering the content.
 
+      - APIs and Global objects:
+         - Web APIs : DOM, Fetch and web storage API etc and window object
+
+
+   NodeJS:
+
+      - Provides a server-side run-time env. It extends the capappbilities to interact with the filesystem, perform the network operationsand run the applications outside of a browser.
+
+      - Node APIs : fs module, http module for creating a server, os etc and global object: global and process-specific object (process.env)
