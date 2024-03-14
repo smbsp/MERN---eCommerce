@@ -4,22 +4,28 @@
    solution:  streaming
  */
 
-// const fs = require('fs');
-// const http = require('http');
+const fs = require('fs');
+const http = require('http');
 
-// const server = http.createServer();
+const server = http.createServer();
 
-// server.on('request', (req, res)=>{
-//     fs.readFile('./big.file', (err, data)=>{
-//         if(err) throw err;
-//         res.end(data);
-//     })
-// })
+server.on('request', (req, res)=>{
+    // fs.readFile('./src/big.file', (err, data)=>{
+    //     if(err) throw err;
+    //     res.end(data);
+    // })
+
+    const fileReadStream = fs.createReadStream('./src/big.file');
+    fileReadStream.pipe(res); // res is a writable stream
+
+    // const fileReadStream = fs.createReadStream('./src/big.file');
+    // fileReadStream.pipe(res);
+})
 
 
-// server.listen(3000, () => {
-//     console.log('server statrted at 3000')
-// })
+server.listen(3000, () => {
+    console.log('server statrted at 3000')
+});
 
 
 /**
@@ -68,31 +74,52 @@
 
 
 
-const http = require('http');
-const fs = require('fs');
-const path = require('path');
+// const http = require('http');
+// const fs = require('fs');
+// const path = require('path');
 
-const server = http.createServer();
+// const server = http.createServer();
 
-// code for reading stream
+// // code for reading stream
 
-const filePath = path.join(__dirname, '', 'big.file');
+// const filePath = path.join(__dirname, 'big.file');
+// console.log(filePath);
 
-console.log(filePath);
+// const fileReadStream = fs.createReadStream(filePath);
+// const fileWriteStream = fs.createWriteStream('copyOfbig.file');
 
-const readableStream = fs.createReadStream(filePath);
+// // fileReadStream.on('data', (chunk)=> {
+// //     console.log(`Recieved ${chunk.length} bytes of data`);
+// //     fileWriteStream.write(chunk);
+// // })
 
-readableStream.on('data', (chunk)=> {
-    console.log(`Recieved ${chunk.length} bytes of data`);
-})
+// // fileReadStream.on('end', ()=>{
+// //     fileWriteStream.end();
+// //     console.log('End of reading a file')
+// // });
 
-readableStream.on('end', ()=>{
-    console.log('End of reading a file')
-;})
+// // try {
 
+// //     fileReadStream.on('data', (chunk)=> {
+// //     console.log(`Recieved ${chunk.length} bytes of data`);
+// // })
+    
+// // } catch (error) {
+// //     console.log('Error in reading the file', error);
+// // }
 
-server.listen(3000, ()=>{
-    console.log('Server is running on 3000')
-})
+//   //fileReadStream.pipe(fileWriteStream);
+
+// fileReadStream.on('error', (error)=>{
+//     console.log("error", error);
+// })
+
+// fileWriteStream.on('error', (error)=>{
+//     console.log("error", error);
+// })
+
+// server.listen(3000, ()=>{
+//     console.log('Server is running on 3000')
+// })
 
 

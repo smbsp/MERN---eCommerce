@@ -46,5 +46,7 @@ console.log(newPath)
        4. Transformative - change one output to anothet output -> zlib, crypto
 
      Streams use the "EventEmitter" as a base class
+
+     stream docs: https://nodejs.org/api/stream.html
   */
  

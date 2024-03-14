@@ -51,7 +51,7 @@ const grpBtn = document.getElementById('createGrp');
 grpBtn.addEventListener('click', ()=>{
     console.log("group created request");
     socket.emit("create_grp", Math.floor(Math.random(0,1)*1000));
-})
+});
 
 const joinBtn = document.getElementById('joinGrp');
 
@@ -68,7 +68,6 @@ stgBtn.addEventListener('click', ()=>{
   if(value.length) {
     socket.emit("grp_message", value);
   }
-
 });
 
 socket.on('serv_grp_message', (data)=>{
