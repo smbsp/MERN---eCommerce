@@ -1,5 +1,6 @@
 const express = require('express');
-const userRoutes = require('./routes/users.js');
+// const userRoutes = require('./routes/users.js');
+const userRoutes = require('./routes/assignment.js');
 
 const app = express();
 
@@ -12,6 +13,6 @@ app.use('/api/users', userRoutes); // /api/users/:id
 const port = 8090;
 const hostname = 'localhost';
 
-app.listen(port, hostname, ()=>{
+app.listen(port, hostname, () => {
     console.log(`Server is running on http://${hostname}:${port}`)
 })

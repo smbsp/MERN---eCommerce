@@ -1,21 +1,19 @@
 const express = require('express');
-
 const router = express.Router();
+const fs = require('fs');
+const path = require('path');
 
-// Assignaments:
+let users = [];
 
-// create a data.json file and put users data there
-// read file and content from the file
-// store into a variable users from file.
-
-
-let users = [
-    { id: 1, name: 'Ashwani' },
-    { id: 2, name: 'Durgesh' },
-    { id: 3, name: 'Geetha' },
-    { id: 4, name: 'Sanket' },
-    { id: 5, name: 'Umesh' },
-];
+// Read data from file
+console.log(__dirname);
+fs.readFile(path.join(__dirname, '..', 'data.json'), 'utf8', (err, data) => {
+    if (err) {
+        console.error('Error reading file:', err);
+        return;
+    }
+    users = JSON.parse(data);
+});
 
 router.get('/', (req, res) => { // -> /-> /api/users 
     try {
