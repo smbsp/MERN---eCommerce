@@ -34,7 +34,7 @@
    - MVC stands Model View Controller
    1. Model (Mongoose): Respresnts the data structure and logic of the application.
    2. View: represents the UI(User Interface). (Client side code -> React)
-   3. Controller: Flowing the data b/e model and view.
+   3. Controller: Flowing the data b/w model and view.
 
 # What is factory DP?
 
