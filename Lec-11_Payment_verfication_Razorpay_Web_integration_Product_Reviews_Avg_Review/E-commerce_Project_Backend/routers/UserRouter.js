@@ -11,7 +11,7 @@ UserRouter.get("/", isAdminMiddleWare, getAllUserHandler);
 
 // chaining
 UserRouter.post("/", checkInput, isAdminMiddleWare, createuserHandler);
-UserRouter.get("/:userId", getUserById);
-UserRouter.delete("/:userId", isAdminMiddleWare,deleteUserById);
+UserRouter.get("/:elementId", getUserById);
+UserRouter.delete("/:elementId", isAdminMiddleWare, deleteUserById);
 
 module.exports = UserRouter;
