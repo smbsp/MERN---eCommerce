@@ -33,10 +33,10 @@ const userSchemaRules = {
         type: [mongoose.Schema.ObjectId],
         ref: "bookingModel"
     },
-/****
- *  token -> forget and reset 
- * **/
-token: {
+    /****
+     *  token -> forget and reset 
+     * **/
+    token: {
         type: String
     },
     otpExpiry: {

@@ -3,7 +3,7 @@ const { getByIdFactory,
     createFactory,
     deleteByIdFactory } = require("../utils/crudFactory");
 const UserModel = require("../models/UserModel");
-/*********************users********************/ 
+/*********************users********************/
 const getAllUserHandler = getAllFactory(UserModel);
 const createuserHandler = createFactory(UserModel);
 const getUserById = getByIdFactory(UserModel);

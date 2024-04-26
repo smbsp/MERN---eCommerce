@@ -15,7 +15,7 @@ const sendEmailHelper = require('../utils/dynamicMailSender');
 const pathToOtpHTML = path.join(__dirname, "../", "templates", "otp.html");
 const HtmlTemplateString = fs.readFileSync(pathToOtpHTML, "utf-8");
 
-const signupController = async(req, res) => {
+const signupController = async (req, res) => {
     try {
         // add it to the db 
         const userObject = req.body
@@ -35,7 +35,7 @@ const signupController = async(req, res) => {
         })
     }
 }
-const loginController = async(req, res) => {
+const loginController = async (req, res) => {
     try {
 
         /***
@@ -128,7 +128,8 @@ const resetPasswordController = async function (req, res) {
     // -> params -> id 
     try {
         const userId = req.params.userId;
-        const { password, confirmPasword, otp } = req.body;
+        const { password, confirmPassword, otp } = req.body;
+        console.log(password, confirmPassword, otp);
         /****
          * 1. search user using id
          * 
@@ -144,7 +145,7 @@ const resetPasswordController = async function (req, res) {
             if (otp && user.token == otp) {
                 let currentTime = Date.now();
                 if (currentTime < user.otpExpiry) {
-                    user.confirmPassword = confirmPasword;
+                    user.confirmPassword = confirmPassword;
                     user.password = password;
                     delete user.token;
                     delete user.otpExpiry
@@ -186,7 +187,7 @@ const protectRouteMiddleWare = async function (req, res, next) {
 
         if (decryptedToken) {
             let userId = decryptedToken.id;
-            console.log(userId)
+            console.log(userId, req.params);
             // adding the userId to the req object
             req.userId = userId;
             console.log("authenticated");
@@ -200,6 +201,24 @@ const protectRouteMiddleWare = async function (req, res, next) {
 
     }
 }
+
+const isValidUser = async function (req, res, next) {
+    const { userId } = req;
+    const { elementId } = req.params;
+
+    let user = await UserModel.findById(userId);
+    if (user.role != "admin") {
+        // Check if the user ID from the JWT matches the elementId from the URL params
+        if (userId !== elementId) {
+            return res.status(403).json({
+                status: "failure",
+                message: "Unauthorized access: User ID does not match."
+            });
+        }
+    }
+    next();
+}
+
 const isAdminMiddleWare = async function (req, res, next) {
     // has to check whether the role of user is admin or not 
     try {
@@ -272,6 +291,7 @@ module.exports = {
     forgetPasswordController,
     resetPasswordController,
     protectRouteMiddleWare,
+    isValidUser,
     isAdminMiddleWare,
     isAuthorizedMiddleWare,
     logoutController

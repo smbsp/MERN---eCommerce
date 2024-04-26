@@ -34,5 +34,17 @@ const sampleUsers = [
         "email": "fam@email.com",
         "password": "fam@1234",
         "confirmPassword": "fam@1234"
+    },
+    {
+        "name": "Gam",
+        "email": "gam@email.com",
+        "password": "gam@1234",
+        "confirmPassword": "gam@1234"
+    },
+    {
+        "name": "Ham",
+        "email": "ham@email.com",
+        "password": "ham@1234",
+        "confirmPassword": "ham@1234"
     }
 ];

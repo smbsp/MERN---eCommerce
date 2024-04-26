@@ -1,4 +1,3 @@
-
 const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
 dotenv.config();
@@ -16,7 +15,6 @@ const techDetails = {
     }
 }
 const transporter = nodemailer.createTransport(techDetails);
-const fs = require("fs");
 
 /*************************************************/
 async function emailSender(to, subject, html, text) {
