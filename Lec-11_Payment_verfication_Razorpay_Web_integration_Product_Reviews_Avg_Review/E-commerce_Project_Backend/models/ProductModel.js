@@ -50,7 +50,7 @@ const newProductSchemaRules = {
 
     },
     price: {
-        type: String,
+        type: Number,
         required: [true, "kindly pass the price"],
         validate: {
             validator: function () {
@@ -91,7 +91,7 @@ const newProductSchemaRules = {
     },
     reviews: {
         type: [mongoose.Schema.ObjectId],
-        ref:"reviewModel"
+        ref: "reviewModel"
     }
 }
 
@@ -107,7 +107,7 @@ productSchema.index({ name: 1 }); // Index on 'name' field in ascending order
 productSchema.index({ brand: 1 }); // Index on 'brand' field in ascending order
 productSchema.index({ categories: 1 }); // Index on 'categories' field in ascending order
 productSchema.index({ price: 1 }); // Index on 'price' field in ascending order
-let validCategories = ['Electronics', "Audio", 'Clothing', 'Accessories', "Shoes", "Men's Fashion"];
+let validCategories = ['Electronics', "Audio", 'Clothing', 'Accessories', "Shoes", "Men's Fashion", "Sports", "Photography", "Technology"];
 
 productSchema.pre("save", function (next) {
     const product = this;

@@ -187,7 +187,7 @@ const protectRouteMiddleWare = async function (req, res, next) {
 
         if (decryptedToken) {
             let userId = decryptedToken.id;
-            console.log(userId, req.params);
+            console.log("protectRouteMiddleWare", userId, req.params);
             // adding the userId to the req object
             req.userId = userId;
             console.log("authenticated");

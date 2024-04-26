@@ -24,31 +24,30 @@ const initialBookingController = async (req, res) => {
             user: userId,
             product: productId,
             priceAtThatTime: priceAtThatTime,
-            status: status 
+            status: status
         });
 
         console.log('booking data->', bookingObject);
 
         // fetch user data and add the order id or the booking id
         const userObject = await UserModel.findById(userId);
-        
+
         userObject.bookings.push(bookingObject["_id"]);
         await userObject.save();
         console.log('userdata->', userObject);
-        
-        
+
+
         /****************initiating the payment*************/
         const amount = bookingObject.priceAtThatTime;
         const currency = "INR";
-        const payment_capture = 1; 
+        const payment_capture = 1;
         const options = {
             amount: amount * 100,  // amount in the smallest currency unit (paise)
             currency: currency,
             receipt: bookingObject["_id"],
-            payment_capture:  payment_capture
+            payment_capture: payment_capture
         };
-        
-       console.log('razorpay', razorpayInstance.orders.create(options))
+
         const orderObject = await razorpayInstance.orders.create(options);
         console.log('oderObject->', orderObject);
         bookingObject.payment_order_id = orderObject.id;
@@ -76,16 +75,16 @@ const initialBookingController = async (req, res) => {
 
 const getAllBookings = async (req, res) => {
     try {
-      // write the booking logic here
+        // write the booking logic here
 
-      const allBookings = await BookingModel.find();
-      res.status(201).json({
-        status:"success",
-        message:"All bookings have been fetched successfully",
-        data: {
-            allBookings
-        }
-      })
+        const allBookings = await BookingModel.find();
+        res.status(201).json({
+            status: "success",
+            message: "All bookings have been fetched successfully",
+            data: {
+                allBookings
+            }
+        })
 
 
     } catch (err) {
@@ -97,7 +96,7 @@ const getAllBookings = async (req, res) => {
 }
 
 // This will be done during frontend integration
-const verifyPaymentController = async(req, res) => {
+const verifyPaymentController = async (req, res) => {
     try {
         // this object -> sha256+webhook_secret
         const shasum = crypto.createHmac("sha256", WEBHOOK_SECERET);

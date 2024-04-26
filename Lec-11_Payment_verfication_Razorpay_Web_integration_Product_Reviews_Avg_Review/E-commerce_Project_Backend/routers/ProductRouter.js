@@ -1,9 +1,9 @@
 const express = require("express");
 const ProductRouter = express.Router();
-const { 
+const {
     createProductHandler,
     getProductById,
-    deleteProductById 
+    deleteProductById
 } = require("../controllers/ProductController");
 const { checkInput } = require("../controllers/middleWares");
 const ProductModel = require("../models/ProductModel");
@@ -14,7 +14,7 @@ ProductRouter.post("/", checkInput,
     createProductHandler);
 ProductRouter.get("/", getAllProductHandler);
 ProductRouter.get("/:elementId", getProductById);
-ProductRouter.delete("/:elementId", isAuthorizedMiddleWare(['admin', 'seller']), deleteProductById);
+ProductRouter.delete("/:elementId", protectRouteMiddleWare, isAuthorizedMiddleWare(['admin', 'seller']), deleteProductById);
 module.exports = ProductRouter;
 
 async function getAllProductHandler(req, res) {
@@ -27,8 +27,8 @@ async function getAllProductHandler(req, res) {
         let query = req.query;
         let selectQuery = query.select;
         let sortQuery = query.sort
-        // console.log("selectParam", selectParam);
-        // console.log("sortParam", sortParam);
+        // console.log("selectParam", selectQuery);
+        // console.log("sortParam", sortQuery);
         // make a find query -> searching for the product
         let queryResPromise = ProductModel.find()
         // sort the entries 
@@ -36,16 +36,14 @@ async function getAllProductHandler(req, res) {
             // "price inc"
             let order = sortQuery.split(" ")[1];
             let sortParam = sortQuery.split(" ")[0];
-            // console.log("order",order,"sortParam",sortParam);
+            // console.log("order", order, "sortParam", sortParam);
             // applying this logic for inc and dec 
-            if (order == "inc") {
-                queryResPromise = queryResPromise.sort(sortParam);
-            } else {
-                queryResPromise = queryResPromise.sort(-sortParam);
-            }
+            // Construct the sorting string correctly
+            let sortString = (order === "inc") ? sortParam : `-${sortParam}`;
+            queryResPromise = queryResPromise.sort(sortString);
         }
         if (selectQuery) {
-            queryPromise = queryResPromise.select(selectQuery);
+            queryResPromise = queryResPromise.select(selectQuery);
         }
         // when find and sort both are done 
         const result = await queryResPromise;
