@@ -53,11 +53,17 @@ const loginController = async (req, res) => {
                        * */
                 // payload : id of that user 
                 let token = await promisifiedJWTSign({ id: user["_id"] }, SECRET_KEY);
-                console.log("sendning token");
-                res.cookie("JWT", token, { maxAge: 90000000, httpOnly: true, path: "/" });
+                console.log("Setting cookie", token);
+                res.cookie("JWT", token, {
+                    httpOnly: true,
+                    secure: false,  // For HTTP local development, set to true for HTTPS
+                    sameSite: 'Lax',  // 'None' requires secure to be true
+                    maxAge: 3600000  // 1 hour
+                });
                 res.status(200).json({
                     status: "success",
-                    message: "user logged In"
+                    message: "user logged In",
+                    token: token
                 })
             } else {
                 console.log("err", err)

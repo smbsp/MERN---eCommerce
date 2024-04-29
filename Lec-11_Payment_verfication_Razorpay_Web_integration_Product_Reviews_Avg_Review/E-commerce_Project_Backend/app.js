@@ -22,7 +22,12 @@ const ProductRouter = require("./routers/ProductRouter");
 const AuthRouter = require("./routers/AuthRouter");
 const BookingRouter = require("./routers/BookingRouter");
 const ReviewRouter = require("./routers/ReviewRouter");
-app.use(cors());
+// Configure CORS
+const corsOptions = {
+    origin: 'http://localhost:5173',  // Adjust according to your frontend URL
+    credentials: true,
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
