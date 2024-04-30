@@ -1,3 +1,9 @@
+// How to Use This Example
+// Run the Local Server: Open a terminal and run node localServer.js.
+// Run the Tunnel Server: Open another terminal and run node tunnel.js.
+// Access the Proxy: Using a browser or a tool like curl, access http://localhost:8080. The proxy server will 
+// forward your request to the local server running on port 3000 and return its response.
+
 require('dotenv').config();
 const axios = require('axios');
 const crypto = require('crypto');
