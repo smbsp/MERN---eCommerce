@@ -47,18 +47,21 @@ function App() {
     console.log('Checkout.js script loaded');
     const productId = '662b97aa990b9f036cebab1a';
     // Call the function to execute the fetch request
-    await loginUser();
+    // await loginUser();
     // const token = localStorage.getItem('jwt'); // Retrieve the token
-    const resp = await fetch(`http://localhost:9090/api/booking/${productId}`, {method: 'POST', credentials: 'include', headers: {
-      'Content-Type': 'application/json' // Ensure that you have this header
-    }, body: JSON.stringify({
-      // Other necessary data you might want to send
-      priceAtThatTime: 80
-    })});
-    const respJSON = await resp.json();
-    console.log(respJSON.message);
+    // const resp = await fetch(`http://localhost:9090/api/booking/${productId}`, {method: 'POST', credentials: 'include', headers: {
+    //   'Content-Type': 'application/json' // Ensure that you have this header
+    // }, body: JSON.stringify({
+    //   // Other necessary data you might want to send
+    //   priceAtThatTime: 80
+    // })});
+    // const respJSON = await resp.json();
+    // console.log(respJSON.message);
 
-    const {id, currency, amount } = respJSON.message;
+    // const {id, currency, amount } = respJSON.message;
+    const id = 'order_O3NLqYwWPItbhY';
+    const currency = 'INR';
+    const amount = 7000;
 
     console.log(id);
 

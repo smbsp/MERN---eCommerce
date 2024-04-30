@@ -96,48 +96,86 @@ const getAllBookings = async (req, res) => {
 }
 
 // This will be done during frontend integration
+// const verifyPaymentController = async (req, res) => {
+//     try {
+//         // this object -> sha256+webhook_secret
+//         const shasum = crypto.createHmac("sha256", WEBHOOK_SECERET);
+//         // console.log("Verify data->", req.body);
+//         shasum.update(JSON.stringify(req.body));
+//         const freshSignature = shasum.digest("hex");
+//         const razorPaySign = req.headers["x-razorpay-signature"];
+
+//         console.log(freshSignature, razorPaySign);
+//         if (freshSignature == razorPaySign) {
+//             // ok
+//             // write the logic here
+
+//             // get the order id
+//             // booking model to get payment_order_id
+//             // also update the status from pending to success
+//             // save this data in our DB
+
+//             res.status(200).json({
+//                 message: "OK",
+//             });
+//         } else {
+//             // there some tempering 
+//             res.status(403).json({ message: "Invalid" });
+//         }
+
+//     } catch (err) {
+//         console.log(err);
+//         res.status(500).json({
+//             status: "failure",
+//             message: err.message
+//         })
+//     }
+// }
+
+const crypto = require('crypto');
+
 const verifyPaymentController = async (req, res) => {
     try {
-        // this object -> sha256+webhook_secret
-        const shasum = crypto.createHmac("sha256", WEBHOOK_SECERET);
-        // console.log("Verify data->", req.body);
-        shasum.update(JSON.stringify(req.body));
-        const freshSignature = shasum.digest("hex");
-        const razorPaySign = req.headers["x-razorpay-signature"];
-
-        console.log(freshSignature, razorPaySign);
-        if (freshSignature == razorPaySign) {
-            // ok
-            // write the logic here
-
-            // get the order id
-            // booking model to get payment_order_id
-            // also update the status from pending to success
-            // save this data in our DB
-
-            res.status(200).json({
-                message: "OK",
-            });
-        } else {
-            // there some tempering 
-            res.status(403).json({ message: "Invalid" });
+        const { WEBHOOK_SECRET } = process.env;
+        if (!WEBHOOK_SECRET) {
+            throw new Error('WEBHOOK_SECRET Key is not defined');
         }
 
+        const { body } = req;
+        const receivedSignature = req.headers["x-razorpay-signature"];
+
+        if (!receivedSignature) {
+            return res.status(400).json({ message: 'Razorpay signature missing in headers' });
+        }
+
+        const shasum = crypto.createHmac("sha256", WEBHOOK_SECRET);
+        shasum.update(JSON.stringify(body));
+        const computedSignature = shasum.digest('hex');
+
+        if (computedSignature !== receivedSignature) {
+            return res.status(403).json({ message: "Invalid signature. Integrity check failed" });
+        }
+
+        const { event, payload } = body;
+        // Handle the event here, e.g., payment.success
+        console.log('Handling event:', event);
+        // Ensure proper handling of each event type
+
+        res.status(200).json({ message: "Webhook processed successfully" });
     } catch (err) {
-        console.log(err);
+        console.error("Webhook handling error:", err);
         res.status(500).json({
             status: "failure",
             message: err.message
-        })
+        });
     }
-}
-
-
+};
 
 //BookingRouter.use(protectRouteMiddleWare);
 
-BookingRouter.post("/:productId", protectRouteMiddleWare, initialBookingController)
-BookingRouter.post("/verify", protectRouteMiddleWare, verifyPaymentController)
+// BookingRouter.post("/:productId", protectRouteMiddleWare, initialBookingController)
+// BookingRouter.post("/verify", protectRouteMiddleWare, verifyPaymentController)
+BookingRouter.post("/payment-webhook", verifyPaymentController);
 BookingRouter.get("/", getAllBookings);
 
 module.exports = BookingRouter;
