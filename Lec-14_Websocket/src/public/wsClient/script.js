@@ -6,88 +6,112 @@ const div = document.querySelector('.messages');
 
 const ul = document.getElementById('list');
 
-btn.addEventListener('click', ()=>{
+btn.addEventListener('click', () => {
     const value = input.value;
-    if(value) {
+    if (value) {
 
         const div = document.createElement('div');
         div.setAttribute("class", "sender");
 
-       const li = document.createElement("li");
-       li.innerText = value;
+        const li = document.createElement("li");
+        li.innerText = value;
 
-       const para = document.createElement('p');
-       para.innerText = "sender";
+        const para = document.createElement('p');
+        para.innerText = "sender";
 
-       div.appendChild(para);
-       div.appendChild(li);
+        div.appendChild(para);
+        div.appendChild(li);
 
-       ul.appendChild(div);
+        ul.appendChild(div);
 
-       socket.emit("message", value);
-       input.value = "";
+        socket.emit("message", value);
+        input.value = "";
     }
 });
 
-socket.on("broadcast", (message)=>{
-        const div = document.createElement('div');
-        div.setAttribute("class", "reciever");
+socket.on("broadcast", (message) => {
+    const div = document.createElement('div');
+    div.setAttribute("class", "reciever");
 
-       const li = document.createElement("li");
-       li.innerText = message;
+    const li = document.createElement("li");
+    li.innerText = message;
 
-       const para = document.createElement('p');
-       para.innerText = "reciever";
+    const para = document.createElement('p');
+    para.innerText = "reciever";
 
-       div.appendChild(para);
-       div.appendChild(li);
+    div.appendChild(para);
+    div.appendChild(li);
 
-       ul.appendChild(div);
+    ul.appendChild(div);
 });
 
 
 const grpBtn = document.getElementById('createGrp');
 
-grpBtn.addEventListener('click', ()=>{
+grpBtn.addEventListener('click', () => {
     console.log("group created request");
-    socket.emit("create_grp", Math.floor(Math.random(0,1)*1000));
+    socket.emit("create_grp", Math.floor(Math.random(0, 1) * 1000));
 });
 
 const joinBtn = document.getElementById('joinGrp');
 
-joinBtn.addEventListener('click', ()=>{
+joinBtn.addEventListener('click', () => {
     console.log("group join req");
     socket.emit("join_room");
 })
 
 const stgBtn = document.getElementById('stg');
 
-stgBtn.addEventListener('click', ()=>{
-  let value = input.value;
+stgBtn.addEventListener('click', () => {
+    let value = input.value;
 
-  if(value.length) {
-    socket.emit("grp_message", value);
-  }
+    if (value) {
+
+        const div = document.createElement('div');
+        div.setAttribute("class", "sender");
+
+        const li = document.createElement("li");
+        li.innerText = value;
+
+        const para = document.createElement('p');
+        para.innerText = "sender";
+
+        div.appendChild(para);
+        div.appendChild(li);
+
+        ul.appendChild(div);
+
+        socket.emit("grp_message", value);
+        input.value = "";
+    }
 });
 
-socket.on('serv_grp_message', (data)=>{
-     const div = document.createElement('div');
-        div.setAttribute("class", "reciever");
+socket.on('serv_grp_message', (data) => {
+    const div = document.createElement('div');
+    div.setAttribute("class", "reciever");
 
-       const li = document.createElement("li");
-       li.innerText = data;
+    const li = document.createElement("li");
+    li.innerText = data;
 
-       const para = document.createElement('p');
-       para.innerText = "reciever";
+    const para = document.createElement('p');
+    para.innerText = "reciever";
 
-       div.appendChild(para);
-       div.appendChild(li);
+    div.appendChild(para);
+    div.appendChild(li);
 
-       ul.appendChild(div);
-      console.log("Group message->", data);
+    ul.appendChild(div);
+    console.log("Group message->", data);
 });
 
 
-socket.on("message", (data)=>{
+socket.on("message", (data) => {
     console.log('recieving message ->', data)
+});
+
+
+// Add the exit group functionality
+const exitGrpBtn = document.getElementById('exitGrp');
+exitGrpBtn.addEventListener('click', () => {
+    console.log("Group exit request");
+    socket.emit("exit_grp"); // Emit an event to exit the group
 });
