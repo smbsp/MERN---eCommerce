@@ -2,7 +2,7 @@
   
      1. NodeJS modules
          - inbuilt modules (fs, http, path, os);
-         - local modules (like passwordUtil where you exposts the function, objects and use require to import the local modules) 
+         - local modules (like passwordUtil where you export the function, objects and use require to import the local modules) 
          - third party modules (socket.io, send grid, brevo, nodemailer, crypto)
 
      2. nodejs streams
@@ -56,3 +56,9 @@ Browser vs NodeJS
       - Provides a server-side run-time env. It extends the capappbilities to interact with the filesystem, perform the network operationsand run the applications outside of a browser.
 
       - Node APIs : fs module, http module for creating a server, os etc and global object: global and process-specific object (process.env)
+
+Resources:
+https://github.com/enaqx/awesome-react
+https://github.com/sindresorhus/awesome-nodejs
+https://flaviocopes.com/access/
+https://thevalleyofcode.com/
