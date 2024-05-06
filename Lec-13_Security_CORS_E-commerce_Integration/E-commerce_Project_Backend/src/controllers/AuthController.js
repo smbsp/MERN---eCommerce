@@ -17,7 +17,7 @@ const { encryptPassword, decryptPassword } = require('../utils/passwordUtil');
 const pathToOtpHTML = path.join(__dirname, "../", "templates", "otp.html");
 const HtmlTemplateString = fs.readFileSync(pathToOtpHTML, "utf-8");
 
-const signupController = async(req, res) => {
+const signupController = async (req, res) => {
     try {
         // add it to the db 
         const userObject = req.body
@@ -29,7 +29,7 @@ const signupController = async(req, res) => {
 
         console.log(encryptPwd, encryptConfirmPwd);
 
-        let newUser = await UserModel.create({...userObject, password: encryptPwd, confirmPassword: encryptConfirmPwd});
+        let newUser = await UserModel.create({ ...userObject, password: encryptPwd, confirmPassword: encryptConfirmPwd });
         // let newUser = await UserModel.create(userObject);
 
         // send a response 
@@ -46,7 +46,7 @@ const signupController = async(req, res) => {
         })
     }
 }
-const loginController = async(req, res) => {
+const loginController = async (req, res) => {
     try {
 
         /***
@@ -157,12 +157,12 @@ const resetPasswordController = async function (req, res) {
         const user = await UserModel.findById(userId);
         if (user) {
             if (otp && user.token == otp) {
-                let currentTime = Date.now();
-                if (currentTime < user.otpExpiry) {
-                    user.confirmPassword = confirmPasword;
-                    user.password = password;
-                    delete user.token;
-                    delete user.otpExpiry
+                let currentTime = new Date().getTime();;
+                if (currentTime < new Date(user.otpExpiry).getTime()) {
+                    user.password = encryptPassword(password);
+                    user.confirmPassword = encryptPassword(confirmPasword);
+                    user.token = undefined;
+                    user.otpExpiry = undefined;
                     await user.save();
                     res.status(200).json({
                         "status": "success",

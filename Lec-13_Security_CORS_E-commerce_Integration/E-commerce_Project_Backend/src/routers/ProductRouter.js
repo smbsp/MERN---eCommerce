@@ -1,9 +1,9 @@
 const express = require("express");
 const ProductRouter = express.Router();
-const { 
+const {
     createProductHandler,
     getProductById,
-    deleteProductById 
+    deleteProductById
 } = require("../controllers/ProductController");
 const { checkInput } = require("../controllers/middleWares");
 const ProductModel = require("../models/ProductModel");
@@ -11,7 +11,7 @@ const { protectRouteMiddleWare, isAuthorizedMiddleWare } = require("../controlle
 
 /****************** Methods **********/
 
-const getAllProductHandler = async(req, res) => {
+const getAllProductHandler = async (req, res) => {
     try {
         // are done on the level of DB
         // -> find all the data
@@ -57,12 +57,12 @@ const getAllProductHandler = async(req, res) => {
     }
 }
 
-const getProductCategories = async(req, res) => {
+const getProductCategories = async (req, res) => {
     // to create dynamic categories, persist the data in a file and read the content of that file and just set into data
- res.json({
-   message: "Get categories successful",
-   data: ["electronics", "men's clothing", "women's clothing", "jewelery"],
- });
+    res.json({
+        message: "Get categories successful",
+        data: ["electronics", "men's clothing", "women's clothing", "jewelery"],
+    });
 }
 
 /***********products***********/
@@ -72,6 +72,6 @@ ProductRouter.post("/", checkInput,
 ProductRouter.get("/", getAllProductHandler);
 ProductRouter.get("/categories", getProductCategories);
 ProductRouter.get("/:elementId", getProductById);
-ProductRouter.delete("/:elementId", isAuthorizedMiddleWare(['admin', 'seller']), deleteProductById);
+ProductRouter.delete("/:elementId", protectRouteMiddleWare, isAuthorizedMiddleWare(['admin', 'seller']), deleteProductById);
 
 module.exports = ProductRouter;
