@@ -8,7 +8,7 @@ const cors = require("cors");
 dotenv.config();
 const { PORT, DB_PASSWORD, DB_USER } = process.env;
 /**********************connection to our DB********************************/
-const dbURL = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.jdq8n60.mongodb.net/?retryWrites=true&w=majority`;
+const dbURL = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.gn4citi.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 // once 
 mongoose.connect(dbURL)
     .then(function (connection) {
@@ -24,7 +24,7 @@ const BookingRouter = require("./src/routers/BookingRouter");
 const ReviewRouter = require("./src/routers/ReviewRouter");
 
 
-app.use((req, res, next)=>{
+app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('x-api-secret-key', 'dsghfvsd123GH');
     next();

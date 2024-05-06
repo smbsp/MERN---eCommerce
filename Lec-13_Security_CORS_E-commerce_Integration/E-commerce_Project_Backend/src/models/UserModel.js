@@ -21,9 +21,9 @@ const userSchemaRules = {
         required: true,
         minlength: 8,
         // validate property 
-        // validate: function () { // just remove when you hashing algorithm and as both the password becomes different using hashing
-        //     return this.password == this.confirmPassword
-        // }
+        validate: function () { // just remove when you hashing algorithm and as both the password becomes different using hashing
+            return this.password == this.confirmPassword
+        }
     },
     createdAt: {
         type: Date,
@@ -33,10 +33,10 @@ const userSchemaRules = {
         type: [mongoose.Schema.ObjectId],
         ref: "bookingModel"
     },
-/****
- *  token -> forget and reset 
- * **/
-token: {
+    /****
+     *  token -> forget and reset 
+     * **/
+    token: {
         type: String
     },
     otpExpiry: {

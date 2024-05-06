@@ -2,9 +2,9 @@
 const crypto = require("crypto");
 
 // Generates a random initialization vector (IV) of 16 bytes for AES encryption.
-const iv = crypto.randomBytes(16);
+const iv = Buffer.from(process.env.AES_IV, 'hex');
 // Generates a random encryption key of 32 bytes (256 bits) for AES encryption.
-const key = crypto.randomBytes(32);
+const key = Buffer.from(process.env.AES_KEY, 'hex');
 
 const encryptPassword = (plainPassword) => {
   //Creates a Cipher object for AES-256-CBC encryption using the generated key and IV.
